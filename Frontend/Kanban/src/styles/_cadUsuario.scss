@@ -5,10 +5,38 @@
     margin: 8px;
     padding: 8px;
     border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-left: 70vh;
     
     h2{
         color: $accent;
         font-size: $font-primary;
         text-align: center;
+    }
+
+    .custom-input {
+        border: none;          // remove a borda
+        outline: none;         // remove a borda azul ao focar
+        padding: 8px 12px;     // espaçamento interno
+        border-radius: 6px;    // arredondamento
+        background-color: #f5f5f5; // fundo mais suave
+        font-size: 16px;
+        border: solid rgb(187, 187, 187) 1px;
+    }
+
+    .bottom-cad{
+        padding: 8px 16px;
+        border: solid rgb(187, 187, 187) 1px;
+        font-size: 17px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: $accent;
+    }
+
+    .errors{
+        color: rgb(211, 0, 0);
     }
 }
