@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Inicial } from '../src/Paginas/Inicial';
-import { Quadro } from '../src/components/Quadro';
+import { Quadro } from '../src/Componentes/Quadro';
 import { CadUsuario } from '../src/Paginas/CadUsuario';
 import { CadTarefa } from '../src/Paginas/CadTarefa';
 
