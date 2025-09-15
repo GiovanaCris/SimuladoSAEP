@@ -1,10 +1,14 @@
 @use './variaveis' as *;
-.cabecalho{
+
+.cabecalho {
     background-color: $accent;
     height: 80px;
-    
-    h1{
+    display: flex;             // ativa o flexbox
+    justify-content: center;   // centraliza horizontalmente
+    align-items: center;       // centraliza verticalmente
+
+    h1 {
         color: $background;
-        
+        margin: 0;             // remove margem padrão do h1
     }
 }

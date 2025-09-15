@@ -1,17 +1,31 @@
 @use './variaveis.scss' as *;
 
-.container{
+.container {
     max-width: 1440px;
+    margin: 0 auto;
     padding: 10px;
-    margin: 10px;
+
     display: flex;
-    flex-direction: column;
-    margin-left: 23vh;
-    gap: 2px;
+    flex-direction: column;      // empilha h1 + colunas
+    align-items: center;         // centraliza horizontalmente
+    justify-content: flex-start; // você pode trocar para center se quiser central vertical
+    gap: 20px;
+
+    border: solid black 1px;
     background-color: $secondary;
 
-    h1{
+    h1 {
         font-size: 26px;
         color: $background;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .colunas-container {
+        display: flex;
+        flex-direction: row;      // colunas lado a lado
+        justify-content: center;  // centraliza colunas horizontalmente
+        gap: 20px;
+        width: 100%;
     }
 }

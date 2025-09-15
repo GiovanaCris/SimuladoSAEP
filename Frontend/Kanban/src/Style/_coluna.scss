@@ -1,18 +1,31 @@
 @use './variaveis.scss' as *;
 
-
-.coluna{
-    background-color: $background;
-    border: 6px solid $background;
-    padding: 1rem;
+.coluna {
+    flex: 1; // cada coluna ocupa espaço igual
+    // background-color: blue;
+    padding: 2rem;
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex-direction: column; // itens dentro da coluna em coluna
+    gap: 20px;
+    border: solid black 1px;
 
-    .titulo{
+    .titulo {
         font-size: 18px;
         color: $primary;
         text-align: center;
         font-family: $font-primary;
+        margin-bottom: 10px;
+    }
+
+    .info-card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        background-color: $background;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
     }
 }

@@ -63,12 +63,10 @@ export function CadTarefa() {
 
             <label>Descrição Tarefa:</label>
             <input type='text' className='custom-input' placeholder='Digite a descrição da tarefa:' {...register("descricao_tarefa")} />
-            {/*Aqui eu vejo a vaiavel erros no campo nome e exibo a mensagem para o usuario*/}
             {errors.descricao_tarefa && <p className='errors'>{errors.descricao_tarefa.message}</p>}
 
             <label>Nome do Setor:</label>
             <input type='text' className='custom-input' placeholder='Digite o setor:' {...register("nome_setor")} />
-            {/*Aqui eu vejo a vaiavel erros no campo nome e exibo a mensagem para o usuario*/}
             {errors.nome_setor && <p className='errors'>{errors.nome_setor.message}</p>}
 
             <label>Prioridade:</label>
