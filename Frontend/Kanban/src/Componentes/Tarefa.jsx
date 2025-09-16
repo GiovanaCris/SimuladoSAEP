@@ -44,7 +44,12 @@ export function Tarefa({ tarefa }) {
                     <dd>{tarefa.prioridade}</dd>
 
                     <dt>Criado em:</dt>
-                    <dd>{tarefa.data_cadastro}</dd>
+                    <dd>
+                        {(() => {
+                            const [ano, mes, dia] = tarefa.data_cadastro.split("-");
+                            return `${dia}/${mes}/${ano}`;
+                        })()}
+                    </dd>
                 </dl>
             </article>
 
@@ -60,12 +65,11 @@ export function Tarefa({ tarefa }) {
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                 >
-                    <option value="">Selecione</option>
                     <option value="A FAZER">A fazer</option>
                     <option value="FAZENDO">Fazendo</option>
                     <option value="FEITO">Feito</option>
                 </select>
-                <button type="submit">Alterar Status</button>
+                <button type="submit">ALTERAR STATUS</button>
             </form>
         </article>
     );

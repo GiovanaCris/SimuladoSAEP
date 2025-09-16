@@ -30,9 +30,9 @@ export function Quadro() {
         <main className="container">
             <h1>Meu Quadro</h1>
             <div className="colunas-container">
-                <Coluna titulo="A fazer" tarefas={tarefasAfazer} />
-                <Coluna titulo='Fazendo' tarefas={tarefasFazendo} />
-                <Coluna titulo='Feito' tarefas={tarefasFeito} />
+                <Coluna titulo="A FAZER" tarefas={tarefasAfazer} />
+                <Coluna titulo='FAZENDO' tarefas={tarefasFazendo} />
+                <Coluna titulo='FEITO' tarefas={tarefasFeito} />
             </div>
         </main>
 
