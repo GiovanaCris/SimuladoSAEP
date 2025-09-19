@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Coluna } from "./Coluna";
+import {DndContext} from '@dnd-kit/core'; //É o uso da biblioteca de clicar e arrastar
 
 export function Quadro() {
     const [tarefas, setTarefas] = useState([]);
@@ -18,6 +19,8 @@ export function Quadro() {
             })
             .catch(error => console.error("Erro ao buscar tarefas:", error));
     }, [])
+
+    //função de 
 
     //estou armazenando em variaveis o resultado de uma função callback que procura tarefas 
     // com certo status
