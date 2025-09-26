@@ -70,13 +70,13 @@ export function CadUsuario() {
         <form onSubmit={handleSubmit(obterdados)} className='main'>
             <h2>Cadastro de  Usuário</h2>
 
-            <label>Nome:</label>
-            <input type='text' className='custom-input' placeholder='Nome seu nome' {...register("nome")} />
+            <label htmlFor='nome'>Nome:</label>
+            <input type='text' id='nome' className='custom-input' placeholder='Nome seu nome' {...register("nome")} />
             {/*Aqui eu vejo a vaiavel erros no campo nome e exibo a mensagem para o usuario*/}
             {errors.nome && <p className='errors'>{errors.nome.message}</p>}
 
-            <label>E-mail:</label>
-            <input type='email' className='custom-input' placeholder='Digite seu E-mail' {...register("email")} />
+            <label htmlFor='email'>E-mail:</label>
+            <input type='email' id='email' className='custom-input' placeholder='Digite seu E-mail' {...register("email")} />
             {/*Aqui eu vejo a vaiavel erros no campo nome e exibo a mensagem para o usuario*/}
             {errors.email && <p className='errors'>{errors.email.message}</p>}
 
