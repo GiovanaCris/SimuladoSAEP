@@ -1,5 +1,6 @@
-@use './variaveis' as *;
-.main{
+@use './variaveis'as *;
+
+.main {
     background-color: $background;
     max-width: 600px;
     margin: 8px;
@@ -9,8 +10,8 @@
     flex-direction: column;
     gap: 15px;
     margin-left: 70vh;
-    
-    h2{
+
+    h2 {
         color: $accent;
         font-size: $font-primary;
         text-align: center;
@@ -20,13 +21,27 @@
         border: none;
         outline: none;
         padding: 8px 12px;
-        border-radius: 6px;    
+        border-radius: 6px;
         background-color: #ffffff;
         font-size: 16px;
         border: solid rgb(187, 187, 187) 1px;
     }
 
-    .bottom-cad{
+    .custom-textarea {
+        width: 100%;
+        border: none;
+        outline: none;
+        height: 150px;
+        padding: 10px;
+        font-size: 1rem;
+        background-color: #ffffff;
+        border-radius: 5px;
+        resize: vertical;
+        box-sizing: border-box;
+        border: solid rgb(187, 187, 187) 1px;
+    }
+
+    .bottom-cad {
         padding: 8px 16px;
         border: solid rgb(187, 187, 187) 1px;
         font-size: 17px;
@@ -36,7 +51,7 @@
         background-color: $accent;
     }
 
-    .errors{
+    .errors {
         color: rgb(211, 0, 0);
     }
 }

@@ -1,3 +1,4 @@
+//Cabeçalho de todas as páginas
 export function Cabecalho(){
     return(
         <header className="cabecalho">

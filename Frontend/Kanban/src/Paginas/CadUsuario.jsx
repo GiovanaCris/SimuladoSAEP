@@ -3,23 +3,24 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+// Validação do formulário com Zod
 const schemaCadUsuario = z.object({
     nome: z
         .string()
         .min(1, 'Insira ao menos 1 caractere')
-        .max(30, 'Insira até 30 caracteres')
+        .max(100, 'Insira até 100 caracteres')
+        // Limpa caracteres inválidos e espaços extras
         .transform((val) => {
             let cleaned = val.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ ]+/g, "");
             cleaned = cleaned.replace(/\s{2,}/g, " ");
             cleaned = cleaned.trim();
             return cleaned;
         })
-        .refine(
-            (val) =>
-                /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(val),
+        // Valida se é nome completo (nome + sobrenome)
+        .refine((val) =>
+            /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(val),
             "Digite nome completo (nome e sobrenome)"
         ),
-
     email: z
         .string()
         .min(1, 'Insira seu email')
@@ -29,16 +30,12 @@ const schemaCadUsuario = z.object({
 });
 
 export function CadUsuario() {
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-        reset
-    } = useForm({
+    // Hook do React Hook Form com validação Zod
+    const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
         resolver: zodResolver(schemaCadUsuario)
     });
 
+    // Atualiza valor do nome enquanto o usuário digita
     const handleNomeChange = (e) => {
         let valor = e.target.value;
         valor = valor.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ ]+/g, "");
@@ -46,18 +43,20 @@ export function CadUsuario() {
         setValue("nome", valor);
     };
 
+    // Atualiza valor do email enquanto o usuário digita
     const handleEmailChange = (e) => {
         let valor = e.target.value.trim();
         if (valor.length > 50) valor = valor.slice(0, 50);
         setValue("email", valor);
     };
 
+    // Envia dados para o backend
     async function obterdados(data) {
         console.log('dados informados pelo user:', data);
         try {
             await axios.post("http://127.0.0.1:8000/api/usuario/", data);
             alert("Usuário cadastrado com sucesso");
-            reset();
+            reset(); // limpa o formulário
         } catch (error) {
             alert("ÉÉE não rolou, tente da próxima vez");
             console.log("Erros", error);
@@ -68,6 +67,7 @@ export function CadUsuario() {
         <form onSubmit={handleSubmit(obterdados)} className='main' aria-labelledby="form-title">
             <h2 id="form-title">Cadastro de Usuário</h2>
 
+            {/* Input nome */}
             <label htmlFor='nome'>Nome:</label>
             <input
                 type='text'
@@ -82,6 +82,7 @@ export function CadUsuario() {
             />
             {errors.nome && <p id="nome-error" className='errors'>{errors.nome.message}</p>}
 
+            {/* Input email */}
             <label htmlFor='email'>E-mail:</label>
             <input
                 type='email'
@@ -96,6 +97,7 @@ export function CadUsuario() {
             />
             {errors.email && <p id="email-error" className='errors'>{errors.email.message}</p>}
 
+            {/* Botão de envio */}
             <button type='submit' className='bottom-cad'>Cadastrar</button>
         </form>
     );

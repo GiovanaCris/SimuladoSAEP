@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 
-export function BarraNavegacao(){
-    return(
-        <nav className="barra">
-            <ul>
-                <Link to ='/cadUsuario'><li>Cadastro de Usuário</li></Link>
-                <Link to ='/cadTarefa'><li>Cadastro de Tarefa</li></Link>
-                <Link to ='/'><li>Gerenciamento de Tarefas</li></Link>
-            </ul>
-        </nav>
-    )
-
+export function BarraNavegacao() {
+  return (
+    <nav className="barra">
+      <ul>
+        <li><Link to="/cadUsuario">Cadastro de Usuário</Link></li> {/*Link para a página de cadastro de usuário*/}
+        <li><Link to="/cadTarefa">Cadastro de Tarefa</Link></li> {/*Link para a página de cadastro de tarefa*/}
+        <li><Link to="/">Gerenciamento de Tarefas</Link></li> {/*Link para a página de gerenciamento de tarefas*/}
+      </ul>
+    </nav>
+  );
 }

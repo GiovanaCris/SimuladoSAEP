@@ -8,7 +8,9 @@
     align-items: center;       // centraliza verticalmente
 
     h1 {
-        color: $background;
+        color: white;
         margin: 0;             // remove margem padrão do h1
+        font-family: 'Montserrat';
+        font-weight: 600;
     }
 }

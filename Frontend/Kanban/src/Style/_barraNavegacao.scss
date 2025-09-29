@@ -1,12 +1,12 @@
-@use './variaveis' as *;
+@use './variaveis'as *;
 
-.barra{
+.barra {
     background-color: $accent;
     color: $text-primary;
     height: 40px;
     margin: 0;
 
-    ul{
+    ul {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
@@ -16,19 +16,21 @@
         align-self: center;
         padding: 10px;
     }
-    li{
+
+    li {
         text-decoration: none;
         list-style: none;
-    }
-    a{
-        text-decoration: none;
-        color: $background;
 
-        a:hover{
-            color: $primary;
-        }
-        a:active{
-            font-weight: bold;
+        &:hover { //Para realizar uma funcionalidade como hover dentro de um li utilizamos apenas &:hover e não o nome da tag seguido do hover como geralmente é feito no css padrão
+            color: $background;
+            transition: transform 0.2s ease;
+            transform: scale(1.02);
         }
     }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
 }
