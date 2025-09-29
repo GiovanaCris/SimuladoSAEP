@@ -33,7 +33,7 @@ export function Tarefa({ tarefa }) {
     }
 
     return (
-        <article className='card_tarefa'>
+        <article className='card_tarefa' aria-labelledby={`tarefa-${tarefa.id}`}>
             <article className='info_tarefa'>
                 <h3 id={`tarefa-${tarefa.id}`}>{tarefa.descricao_tarefa}</h3>
                 <dl>
@@ -54,16 +54,26 @@ export function Tarefa({ tarefa }) {
             </article>
 
             <article className='button_del_edit'>
-                <button onClick={() => navigate(`/editarTarefa/${tarefa.id}`)}>Editar</button>
-                <button onClick={() => excluirTarefa(tarefa.id)}>Excluir</button>
+                <button onClick={() => navigate(`/editarTarefa/${tarefa.id}`)}>
+                    Editar
+                </button>
+                <button onClick={() => excluirTarefa(tarefa.id)}>
+                    Excluir
+                </button>
             </article>
 
-            <form onSubmit={(e) => { e.preventDefault(); alterarStatus(); }}>
-                <label>Status:</label>
+            <form
+                onSubmit={(e) => { e.preventDefault(); alterarStatus(); }}
+                aria-labelledby={`status-label-${tarefa.id}`}
+            >
+                <label id={`status-label-${tarefa.id}`} htmlFor={`status-${tarefa.id}`}>
+                    Status:
+                </label>
                 <select
                     id={`status-${tarefa.id}`}
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
+                    aria-live="polite"
                 >
                     <option value="A FAZER">A fazer</option>
                     <option value="FAZENDO">Fazendo</option>

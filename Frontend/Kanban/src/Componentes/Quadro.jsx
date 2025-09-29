@@ -38,6 +38,5 @@ export function Quadro() {
                 <Coluna titulo='FEITO' tarefas={tarefasFeito} />
             </div>
         </main>
-
     );
 }
