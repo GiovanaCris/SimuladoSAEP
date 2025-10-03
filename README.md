@@ -6,3 +6,6 @@ npm i react-router-dom
 npm i react-hook-form
 npm i '@hookform/resolvers
 npm install axios
+
+- Rodar teste: npm i -d vitest @testing-library/react @testing-library/jest-dom
+- Rodar: npm run test
