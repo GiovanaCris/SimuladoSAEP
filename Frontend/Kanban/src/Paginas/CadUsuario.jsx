@@ -5,28 +5,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 // Validação do formulário com Zod
 const schemaCadUsuario = z.object({
-    nome: z
-        .string()
-        .min(1, 'Insira ao menos 1 caractere')
-        .max(100, 'Insira até 100 caracteres')
-        // Limpa caracteres inválidos e espaços extras
-        .transform((val) => {
-            let cleaned = val.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ ]+/g, "");
-            cleaned = cleaned.replace(/\s{2,}/g, " ");
-            cleaned = cleaned.trim();
-            return cleaned;
-        })
-        // Valida se é nome completo (nome + sobrenome)
-        .refine((val) =>
-            /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(val),
-            "Digite nome completo (nome e sobrenome)"
-        ),
-    email: z
-        .string()
-        .min(1, 'Insira seu email')
-        .max(50, 'Insira um endereço de email com até 50 caracteres')
-        .email("Formato de email inválido")
-        .transform((val) => val.trim()),
+  nome: z
+    .string()
+    .trim() 
+    .min(1, 'Insira ao menos 1 caractere')
+    .max(100, 'Insira até 100 caracteres')
+    .refine(
+      (val) => /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(val),
+      "Digite nome completo (nome e sobrenome)"
+    )
+    .refine(
+      (val) => !/(.)\1\1/.test(val),
+      "Não use letras repetidas mais de 2 vezes consecutivas"
+    ),
+
+  email: z
+    .string()
+    .min(1, 'Insira seu email')
+    .max(50, 'Insira um endereço de email com até 50 caracteres')
+    .email("Formato de email inválido")
+    .transform((val) => val.trim()),
 });
 
 export function CadUsuario() {
@@ -38,10 +36,18 @@ export function CadUsuario() {
     // Atualiza valor do nome enquanto o usuário digita
     const handleNomeChange = (e) => {
         let valor = e.target.value;
+
+        // Remove caracteres que não são letras ou espaços
         valor = valor.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ ]+/g, "");
+
+        // Substitui espaços consecutivos por 1
         valor = valor.replace(/\s{2,}/g, " ");
+
+        // Remove letras repetidas mais de 2 vezes consecutivas
+        valor = valor.replace(/(.)\1\1+/g, "$1$1"); // AAA -> AA
         setValue("nome", valor);
     };
+
 
     // Atualiza valor do email enquanto o usuário digita
     const handleEmailChange = (e) => {
