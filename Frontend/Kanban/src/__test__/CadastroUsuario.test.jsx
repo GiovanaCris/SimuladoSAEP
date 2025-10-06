@@ -1,6 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, expect } from 'vitest';
 import { CadUsuario } from '../Paginas/CadUsuario';
+import axios from "axios";
+vi.mock("axios"); //Teste de reset após a submissão
 //render: renderiza a minha tela
 //screen: eu vejo os elementos que estao sendo exibidos
 //fireEvent: simula o que o usuário pode fazer em tela
@@ -35,12 +37,15 @@ describe("Cadstro de usuario", () => {
 
     //resetar os campos do formlário
     it("deve resetar os campos após submissão", async () => {
+        // Simula resposta bem-sucedida do backend
+        axios.post.mockResolvedValueOnce({ data: {} });
+
         render(<CadUsuario />);
 
         const nomeInput = screen.getByLabelText(/Nome/i);
         const emailInput = screen.getByLabelText(/E-mail/i);
 
-        fireEvent.input(nomeInput, { target: { value: "Maria Vitoria" } });
+        fireEvent.input(nomeInput, { target: { value: "Maria Clara" } });
         fireEvent.input(emailInput, { target: { value: "maria@email.com" } });
 
         fireEvent.click(screen.getByRole("button", { name: /Cadastrar/i }));
@@ -50,6 +55,7 @@ describe("Cadstro de usuario", () => {
             expect(emailInput.value).toBe("");
         });
     });
+
 
     //teste de apenas espaços em branco no nome
     it("deve mostrar erro quando o nome tiver apenas espaços em branco", async () => {
@@ -241,11 +247,17 @@ describe("Cadstro de usuario", () => {
 
     it("deve mostrar erro quando o email estiver vazio", async () => {
         render(<CadUsuario />);
+
+        const nomeInput = screen.getByLabelText(/Nome/i);
+        const emailInput = screen.getByLabelText(/E-mail/i);
+
+        fireEvent.input(nomeInput, { target: { value: "Maria Vitoria" } });
         fireEvent.input(emailInput, { target: { value: "" } });
+
         fireEvent.click(screen.getByRole("button", { name: /Cadastrar/i }));
+
         await waitFor(() => {
-            const errorMessage = screen.queryByText(/Insira seu email/i);
-            expect(errorMessage).toBeTruthy();
+            expect(screen.getByText(/Insira seu email/i)).toBeTruthy();
         });
     });
 });
