@@ -56,7 +56,6 @@ describe("Cadstro de usuario", () => {
         });
     });
 
-
     //teste de apenas espaços em branco no nome
     it("deve mostrar erro quando o nome tiver apenas espaços em branco", async () => {
         render(<CadUsuario />);
@@ -178,19 +177,16 @@ describe("Cadstro de usuario", () => {
     });
 
     // Teste máximo de caracteres
-    it("deve mostrar erro quando o nome ultrapassar 100 caracteres", async () => {
+    it("deve limitar o email a 50 caracteres e não mostrar erro", async () => {
         render(<CadUsuario />);
 
-        const longName = "Ana".repeat(99) + " Beatriz"; // total 101 caracteres
-        fireEvent.input(screen.getByLabelText(/Nome/i), { target: { value: longName } });
-        fireEvent.input(screen.getByLabelText(/E-mail/i), { target: { value: "teste@email.com" } });
+        const emailInput = screen.getByLabelText(/E-mail/i);
+        const longEmail = "a".repeat(60) + "@teste.com"; // > 50 caracteres
 
-        fireEvent.click(screen.getByRole("button", { name: /Cadastrar/i }));
+        fireEvent.input(emailInput, { target: { value: longEmail } });
 
-        await waitFor(() => {
-            const errorMessage = screen.queryByText(/Insira até 100 caracteres/i);
-            expect(errorMessage).toBeTruthy();
-        });
+        expect(emailInput.value.length).toBeLessThanOrEqual(50);
+        expect(screen.queryByText(/Insira um endereço de email com até 50 caracteres/i)).toBeNull();
     });
 
     // Teste limite de 100 caracteres 
@@ -228,10 +224,6 @@ describe("Cadstro de usuario", () => {
         });
     });
 
-
-
-
-
     //TESTES DO CAMPO E-MAIL
     it("deve mostrar erro quando o email tiver formato inválido", async () => {
         render(<CadUsuario />);
@@ -253,6 +245,23 @@ describe("Cadstro de usuario", () => {
 
         fireEvent.input(nomeInput, { target: { value: "Maria Vitoria" } });
         fireEvent.input(emailInput, { target: { value: "" } });
+
+        fireEvent.click(screen.getByRole("button", { name: /Cadastrar/i }));
+
+        await waitFor(() => {
+            expect(screen.getByText(/Insira seu email/i)).toBeTruthy();
+        });
+    });
+
+    //Teste de apenas espaços no campos
+    it("deve mostrar erro quando o email tiver apenas espaços em branco", async () => {
+        render(<CadUsuario />);
+
+        const nomeInput = screen.getByLabelText(/Nome/i);
+        const emailInput = screen.getByLabelText(/E-mail/i);
+
+        fireEvent.input(nomeInput, { target: { value: "Maria Vitoria" } });
+        fireEvent.input(emailInput, { target: { value: "     " } });
 
         fireEvent.click(screen.getByRole("button", { name: /Cadastrar/i }));
 
