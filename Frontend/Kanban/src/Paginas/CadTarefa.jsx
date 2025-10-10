@@ -8,13 +8,32 @@ import React, { useState, useEffect } from 'react';
 const schemaCadTarefa = z.object({
     descricao_tarefa: z
         .string()
+        .trim()
         .min(1, 'Insira ao menos 1 caractere')
-        .max(255, 'Insira até 255 caracteres'),
+        .max(255, 'Insira até 255 caracteres')
+        .refine((val) => /^[a-zA-Z0-9\s?!]*$/.test(val), {
+            message: 'A descrição só pode conter letras, números, espaços, "?" e "!"',
+        })
+        .refine((val) => !/(.)\1{2,}/.test(val), {
+            message: 'Não repita o mesmo caractere mais de duas vezes seguidas',
+        })
+
+        //Valida espaços em branco com o trim
+        .refine((val) => val.trim().length > 0, {
+            message: 'A descrição não pode conter apenas espaços em branco',
+        }),
 
     nome_setor: z
         .string()
         .min(1, 'Insira o nome do setor')
-        .max(100, 'Insira até 100 caracteres'),
+        .max(100, 'Insira até 100 caracteres')
+        .refine((val) => val.trim().length > 0, { message: 'A descrição não pode conter apenas espaços em branco' })
+        .refine((val) => !/(.)\1{2,}/.test(val), {
+            message: 'Não repita o mesmo caractere mais de duas vezes',
+        })
+        .refine((val) => /^[a-zA-Z\s]*$/.test(val), {
+            message: 'O nome do setor só pode conter letras e espaços',
+        }),
 
     prioridade: z
         .string()
@@ -32,13 +51,11 @@ const schemaCadTarefa = z.object({
 });
 
 export function CadTarefa() {
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(schemaCadTarefa),
+        defaultValues: {
+            status: "A FAZER"
+        }
     });
 
     const [usuarios, setUsuarios] = useState([]);
@@ -53,8 +70,6 @@ export function CadTarefa() {
 
     // Envia dados ao backend
     async function obterdados(data) {
-        console.log("dados informados pelo user:", data);
-
         try {
             const response = await axios.post("http://127.0.0.1:8000/api/reservas/", data);
             alert(
@@ -62,7 +77,13 @@ export function CadTarefa() {
                     response.data.data_cadastro
                 ).toLocaleDateString("pt-BR")}`
             );
-            reset();
+            reset({ // passa novamente os valores padrão
+                nome_setor: "",
+                descricao_tarefa: "",
+                prioridade: "",
+                status: "A FAZER",
+                usuario: ""
+            });
         } catch (error) {
             alert("Não deu certo, tente novamente na próxima! ☹");
             console.log("Erros", error);
@@ -104,7 +125,7 @@ export function CadTarefa() {
 
             {/* Status */}
             <label htmlFor="status">Status:</label>
-            <select id="status" className="custom-input" {...register("status")} defaultValue="A FAZER">
+            <select id="status" className="custom-input" {...register("status")}>
                 <option value="A FAZER">A Fazer</option>
                 <option value="FAZENDO">Fazendo</option>
                 <option value="FEITO">Feito</option>
@@ -115,7 +136,7 @@ export function CadTarefa() {
             <label htmlFor="usuario">Usuário:</label>
             <select id="usuario" {...register("usuario")} className="custom-input">
                 <option value="">Selecione um usuário</option>
-                {usuarios.map((u) => (
+                {usuarios.map(u => (
                     <option key={u.id} value={u.id.toString()}>
                         {u.nome}
                     </option>
